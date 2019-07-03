@@ -1,0 +1,11 @@
+.NavBar {
+  background-color: #f7f7f7;
+  margin: 5px solid #a1a1a1;
+  height: 90%;
+}
+.navigation {
+  list-style: none;
+}
+a {
+  color: black;
+}

@@ -1,0 +1,44 @@
+/*     Updates, UpdatesForm, UpdatesList     */
+
+/* Update Form */
+.ufCard {
+  width: 100%;
+  margin: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius: 0px !important;
+  border-radius: 0px !important;
+  border: 0.5px !important;
+}
+
+.ufTitle {
+  text-align: center;
+  margin: 5px;
+}
+
+.ufContent {
+  text-align: center;
+  margin: 5px;
+}
+
+.subBtn {
+  text-align: center;
+  margin: 5px;
+  color: #fff !important;
+  background-color: #f0ad4e !important;
+  border-color: #eea236 !important;
+  width: 100%;
+}
+.headerClass:hover {
+  background-color: gray;
+}
+
+/* Update List */
+
+/* Updates */
+.uCard {
+  padding: 0px !important;
+}
+
+.sectionDivider {
+  margin-top: 1px !important;
+}
