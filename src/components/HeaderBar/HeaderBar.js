@@ -1,7 +1,7 @@
 import React from "react";
-import "./titlebar.css";
+import "./HeaderBar.css";
 import ReactWeather from "react-open-weather";
-import "react-open-weather/lib/css/ReactWeather.css";
+import "./node_modules/react-open-weather/lib/css/ReactWeather.css";
 
 export default class TitleBar extends React.Component {
   render() {

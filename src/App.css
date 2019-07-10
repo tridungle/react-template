@@ -1,8 +1,9 @@
 .App {
   text-align: center;
-  background-color: rgb(247, 247, 247);
+
   overflow: hidden;
+  height: 100vh;
 }
 .body {
-  background-color: white;
+  background-color: #ffffff;
 }

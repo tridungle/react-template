@@ -1,22 +1,66 @@
 import React, { Component } from "react";
+import {
+  Stitch,
+  AnonymousCredential,
+  RemoteMongoClient
+} from "mongodb-stitch-browser-sdk";
 
-import TitleBar from "./titleBar/TitleBar";
+// import TitleBar from "./titleBar/TitleBar";
 import NotificationBar from "./notificationBar/NotificationBar";
 import NavBar from "./Nav/NavBar";
 import Body from "./bodyComponents/Body";
 import Updates from "./updates/Updates";
 import Clock from "./Clock/Clock";
+import Lottie from "react-lottie";
+import FadeIn from "react-fade-in";
 
-import { Row, Col, Button } from "reactstrap";
+import { Row, Col, Button, Input, Form } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.css";
+
+import * as dotsLoad from "./dotsLoad.json";
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: dotsLoad.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice"
+  }
+};
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      city: "Jerusalem"
+      titleValue: undefined,
+      collection: undefined,
+      collectionTitle: undefined,
+      titleEditMode: false,
+      loading: undefined,
+      done: undefined
     };
   }
+
+  componentWillMount() {
+    const client = Stitch.defaultAppClient;
+    const mongodb = client.getServiceClient(
+      RemoteMongoClient.factory,
+      "mongodb-atlas"
+    );
+    var db = mongodb.db("Infrastructure");
+    var collection = db.collection("Apps");
+    collection
+      .find({})
+      .asArray()
+      .then(details => {
+        var strDet = details[0];
+        this.setState({ collection: strDet, collectionTitle: strDet.title });
+      });
+  }
+
+  handleEditClick() {
+    this.setState({ titleEditMode: !this.state.titleEditMode });
+  }
+
   render() {
     return (
       <div>
@@ -24,40 +68,117 @@ export default class Main extends Component {
           <Weather city={this.state.city} />
         </Row> */}
 
-        <Row className="fullRow">
-          <Col>
-            <NotificationBar style={{ width: "100%" }} />
-            <hr />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs="2">
-            <NavBar />
-            <Button onClick={() => this.setState({ city: "Chicago" })}>
-              Chicago
-            </Button>
-            <Button onClick={() => this.setState({ city: "Belo Horizonte" })}>
-              Belo Horizonte
-            </Button>
-          </Col>
-
-          <Col xs="10" className="body">
-            <h1 style={{ marginTop: "15px" }}> Title Goes Here</h1>
-
-            <hr />
+        {this.state.collection ? (
+          <div>
             <Row>
-              <Col xs="9">
-                <Updates />
+              <Col
+                xs="2"
+                style={{
+                  paddingTop: "143px",
+                  paddingRight: "15px",
+                  paddingLeft: "30px",
+                  height: "100vh",
+                  borderRight: "1px solid lightgray"
+                }}
+              >
+                <NavBar />
+                {/*<Button onClick={() => this.setState({ city: "Chicago" })}>
+                  Chicago
+                </Button>
+                <Button
+                  onClick={() => this.setState({ city: "Belo Horizonte" })}
+                >
+                  Belo Horizonte
+              </Button>*/}
               </Col>
 
-              <Col xs="2">
-                <Clock />
-                <Body style={{ textAlign: "center" }} />
+              <Col xs="10" className="body">
+                {/* Conditional Render for Title from  */}
+
+                <Row style={{ justifyContent: "center" }}>
+                  <Col xs="8">
+                    {this.state.titleEditMode == true ? (
+                      <Form
+                        onSubmit={event => {
+                          event.preventDefault();
+                          const client = Stitch.defaultAppClient;
+                          const mongodb = client.getServiceClient(
+                            RemoteMongoClient.factory,
+                            "mongodb-atlas"
+                          );
+                          var db = mongodb.db("Infrastructure");
+                          var collection = db.collection("Apps");
+                          collection
+                            .findOneAndUpdate(
+                              { appName: this.state.collection.appName },
+                              { $set: { title: this.state.titleValue } }
+                            )
+                            .then(() => {
+                              collection
+                                .find({})
+                                .asArray()
+                                .then(details => {
+                                  var strDet = details[0];
+                                  this.setState({
+                                    collectionTitle: strDet.title,
+                                    titleEditMode: false,
+                                    titleValue: undefined
+                                  });
+                                });
+                            });
+                        }}
+                      >
+                        <Input
+                          type="text"
+                          style={{ marginTop: "15px" }}
+                          autoFocus
+                          onChange={e => {
+                            this.setState({ titleValue: e.target.value });
+                          }}
+                        />
+                        <Button type="submit" />
+                      </Form>
+                    ) : (
+                      <div
+                        style={{
+                          margin: "50px"
+                        }}
+                      >
+                        <h1
+                          onClick={this.handleEditClick.bind(this)}
+                          style={{ color: "#282c34" }}
+                        >
+                          {this.state.collection
+                            ? this.state.collectionTitle
+                            : ""}
+                        </h1>
+                      </div>
+                    )}
+                    <Updates
+                      updates={
+                        this.state.collection
+                          ? this.state.collection.updates
+                          : ""
+                      }
+                      appName={this.state.collection.appName}
+                    />
+                  </Col>
+
+                  <Col xs="2" style={{ marginTop: "143px" }}>
+                    <Clock />
+                    <Body style={{ textAlign: "center" }} />
+                  </Col>
+                </Row>
               </Col>
-            </Row>
-          </Col>
-        </Row>
+            </Row>{" "}
+          </div>
+        ) : (
+          <FadeIn>
+            <div class="d-flex justify-content-center align-items-center">
+              <Lottie options={defaultOptions} height={1200} width={1200} />
+            </div>
+          </FadeIn>
+        )}
       </div>
     );
   }

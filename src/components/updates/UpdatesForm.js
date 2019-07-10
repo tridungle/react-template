@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import "./updates.css";
 import "bootstrap/dist/css/bootstrap.css";
+import Moment from "react-moment";
+
+import {
+  Stitch,
+  AnonymousCredential,
+  RemoteMongoClient
+} from "mongodb-stitch-browser-sdk";
+
 import {
   Card,
   CardHeader,
@@ -16,7 +24,12 @@ class UpdatesForm extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: false, bgcolor: "rgba(0,0,255,.03)" };
+    this.state = {
+      collapse: false,
+      bgcolor: "rgba(0,0,255,.03)",
+      postTitle: "",
+      postContent: ""
+    };
   }
 
   toggle() {
@@ -37,24 +50,64 @@ class UpdatesForm extends Component {
           </CardHeader>
           <Collapse isOpen={this.state.collapse} className="shadow-lg">
             <CardBody>
-              <Form>
+              <Form
+                onSubmit={event => {
+                  event.preventDefault();
+                  if (
+                    this.state.postTitle != "" &&
+                    this.state.postContent != ""
+                  ) {
+                    const client = Stitch.defaultAppClient;
+                    const mongodb = client.getServiceClient(
+                      RemoteMongoClient.factory,
+                      "mongodb-atlas"
+                    );
+                    var db = mongodb.db("Infrastructure");
+                    var collection = db.collection("Apps");
+                    collection
+                      .findOneAndUpdate(
+                        { appName: this.props.appName },
+                        {
+                          $push: {
+                            posts: {
+                              title: this.state.postTitle,
+                              body: this.state.postContent,
+                              date: new Date()
+                            }
+                          }
+                        }
+                      )
+                      .then(() => {
+                        this.setState({ postTitle: "", postContent: "" });
+                      });
+                  }
+                }}
+              >
                 <FormGroup>
                   <Input
                     type="text"
                     name="title"
                     placeholder="Title"
+                    value={this.state.postTitle}
                     id="title"
                     className="ufTitle"
+                    autoComplete="off"
+                    onChange={e => {
+                      this.setState({ postTitle: e.target.value });
+                    }}
                   />
                   <Input
                     type="textarea"
                     name="updateContent"
                     id="textarea"
                     className="ufContent"
+                    value={this.state.postContent}
+                    onChange={e => {
+                      this.setState({ postContent: e.target.value });
+                    }}
                   />
                   <button id="button" className="warning subBtn">
-                    {" "}
-                    Submit{" "}
+                    Submit
                   </button>
                 </FormGroup>
               </Form>

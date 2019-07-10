@@ -1,25 +1,19 @@
 import React from "react";
 import "./Nav.css";
 import "bootstrap/dist/css/bootstrap.css";
+import { Card, CardBody, CardHeader } from "reactstrap";
 
 function NavBar() {
   return (
-    <div className="NavBar">
-      <h1>Nav</h1>
-      <ul className="navigation">
-        <li>
-          <a href="#">
-            <i className="fa fa-dashboard fa-fw" />
-            Homepage
+    <div>
+      <Card className="shadow">
+        <CardHeader>Navigation</CardHeader>
+        <CardBody>
+          <a>
+            <i className="fa fa-home" /> Homepage
           </a>
-        </li>
-        <li>
-          <a href="#">
-            <i className="fa fa-plus fa-fw" />
-            Add a Page
-          </a>
-        </li>
-      </ul>
+        </CardBody>
+      </Card>
     </div>
   );
 }

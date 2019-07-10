@@ -23,7 +23,7 @@ export default class Clock extends Component {
   render() {
     return (
       <div className="clock shadow-sm">
-        <Moment format="DD/MM/YYYY HH:mm:ss" />
+        <Moment format="DD/MM/YYYY HH:mm:ss" tz="America/New_York" />
       </div>
     );
   }
