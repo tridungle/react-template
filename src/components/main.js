@@ -8,7 +8,7 @@ import Updates from "./updates/Updates";
 import Clock from "./Clock/Clock";
 import Lottie from "react-lottie";
 import FadeIn from "react-fade-in";
-
+import PreSetup from "./preSetup/preSetup";
 import { Row, Col, Button, Input, Form } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -165,6 +165,7 @@ export default class Main extends Component {
               <Lottie options={defaultOptions} height={1200} width={1200} />
             </div>
           </FadeIn>
+          // <PreSetup />
         )}
       </div>
     );

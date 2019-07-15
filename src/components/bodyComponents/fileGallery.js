@@ -69,7 +69,6 @@ export default class FileGallery extends Component {
                     name="file"
                     onChange={this.onChangeHandler}
                   />
-                  <Input type="text" placeholder="filename" />
                   <Button onClick={this.onClickHandler} />
                 </Form>
               </CardBody>
