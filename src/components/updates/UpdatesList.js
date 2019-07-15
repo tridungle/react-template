@@ -1,10 +1,6 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import {
-  Stitch,
-  AnonymousCredential,
-  RemoteMongoClient
-} from "mongodb-stitch-browser-sdk";
+import { Stitch, RemoteMongoClient } from "mongodb-stitch-browser-sdk";
 import moment from "moment/min/moment-with-locales";
 
 export default class UpdatesList extends React.Component {

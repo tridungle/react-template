@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import {
-  Stitch,
-  AnonymousCredential,
-  RemoteMongoClient
-} from "mongodb-stitch-browser-sdk";
+import { Stitch, RemoteMongoClient } from "mongodb-stitch-browser-sdk";
 
 // import TitleBar from "./titleBar/TitleBar";
-import NotificationBar from "./notificationBar/NotificationBar";
 import NavBar from "./Nav/NavBar";
 import Body from "./bodyComponents/Body";
 import Updates from "./updates/Updates";
@@ -64,10 +59,6 @@ export default class Main extends Component {
   render() {
     return (
       <div>
-        {/* <Row>
-          <Weather city={this.state.city} />
-        </Row> */}
-
         {this.state.collection ? (
           <div>
             <Row>
@@ -78,18 +69,14 @@ export default class Main extends Component {
                   paddingRight: "15px",
                   paddingLeft: "30px",
                   height: "100vh",
-                  borderRight: "1px solid lightgray"
+                  // borderRight: "1px solid white",
+                  background: "#bdc3c7",
+                  background:
+                    "-webkit-linear-gradient( to top, #2c3e50, #bdc3c7)",
+                  background: "linear-gradient(to top, #2c3e50, #bdc3c7)"
                 }}
               >
                 <NavBar />
-                {/*<Button onClick={() => this.setState({ city: "Chicago" })}>
-                  Chicago
-                </Button>
-                <Button
-                  onClick={() => this.setState({ city: "Belo Horizonte" })}
-                >
-                  Belo Horizonte
-              </Button>*/}
               </Col>
 
               <Col xs="10" className="body">
@@ -97,7 +84,7 @@ export default class Main extends Component {
 
                 <Row style={{ justifyContent: "center" }}>
                   <Col xs="8">
-                    {this.state.titleEditMode == true ? (
+                    {this.state.titleEditMode === true ? (
                       <Form
                         onSubmit={event => {
                           event.preventDefault();
@@ -146,7 +133,7 @@ export default class Main extends Component {
                       >
                         <h1
                           onClick={this.handleEditClick.bind(this)}
-                          style={{ color: "#282c34" }}
+                          style={{ color: "#FFBB87" }}
                         >
                           {this.state.collection
                             ? this.state.collectionTitle

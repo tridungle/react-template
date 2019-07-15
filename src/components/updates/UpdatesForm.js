@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import "./updates.css";
 import "bootstrap/dist/css/bootstrap.css";
-import Moment from "react-moment";
 
-import {
-  Stitch,
-  AnonymousCredential,
-  RemoteMongoClient
-} from "mongodb-stitch-browser-sdk";
+import { Stitch, RemoteMongoClient } from "mongodb-stitch-browser-sdk";
 
 import {
   Card,
   CardHeader,
   CardBody,
   Collapse,
-  Button,
   Form,
   FormGroup,
   Input
@@ -26,7 +20,7 @@ class UpdatesForm extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       collapse: false,
-      bgcolor: "rgba(0,0,255,.03)",
+      bgcolor: "#B9A89A",
       postTitle: "",
       postContent: ""
     };
@@ -54,8 +48,8 @@ class UpdatesForm extends Component {
                 onSubmit={event => {
                   event.preventDefault();
                   if (
-                    this.state.postTitle != "" &&
-                    this.state.postContent != ""
+                    this.state.postTitle !== "" &&
+                    this.state.postContent !== ""
                   ) {
                     const client = Stitch.defaultAppClient;
                     const mongodb = client.getServiceClient(
@@ -78,7 +72,11 @@ class UpdatesForm extends Component {
                         }
                       )
                       .then(() => {
-                        this.setState({ postTitle: "", postContent: "" });
+                        this.setState({
+                          postTitle: "",
+                          postContent: "",
+                          collapse: !this.state.collapse
+                        });
                       });
                   }
                 }}

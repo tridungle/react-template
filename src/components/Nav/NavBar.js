@@ -9,7 +9,54 @@ function NavBar() {
       <Card className="shadow">
         <CardHeader>Navigation</CardHeader>
         <CardBody>
-          <a>
+          <a
+            href="../main.js"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              cursor: "pointer"
+            }}
+          >
+            <i className="fa fa-home" /> Homepage
+          </a>
+          <a
+            href="../main.js"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              cursor: "pointer"
+            }}
+          >
+            <i className="fa fa-home" /> Homepage
+          </a>
+          <a
+            href="../main.js"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              cursor: "pointer"
+            }}
+          >
+            <i className="fa fa-home" /> Homepage
+          </a>
+          <a
+            href="../main.js"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              cursor: "pointer"
+            }}
+          >
+            <i className="fa fa-home" /> Homepage
+          </a>
+          <a
+            href="../main.js"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              cursor: "pointer"
+            }}
+          >
             <i className="fa fa-home" /> Homepage
           </a>
         </CardBody>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   Card,
   CardBody,
@@ -14,7 +15,9 @@ export default class FileGallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapse: false
+      collapse: false,
+      selectedFile: null,
+      loaded: undefined
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -22,6 +25,26 @@ export default class FileGallery extends Component {
   toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
   }
+
+  onChangeHandler = event => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0
+    });
+  };
+
+  onClickHandler = () => {
+    const data = new FormData();
+    data.append("file", this.state.selectedFile);
+    axios
+      .post("http://localhost:8080/upload", data, {
+        // receive two parameter endpoint url ,form data
+      })
+      .then(res => {
+        // then print response status
+        console.log(res.statusText);
+      });
+  };
 
   render() {
     return (
@@ -40,10 +63,14 @@ export default class FileGallery extends Component {
           <CardBody>
             <Collapse isOpen={this.state.collapse} className="shadow-lg">
               <CardBody>
-                <Form>
-                  <Input type="file" />
+                <Form id="upload-form">
+                  <Input
+                    type="file"
+                    name="file"
+                    onChange={this.onChangeHandler}
+                  />
                   <Input type="text" placeholder="filename" />
-                  <Button type="submit" />
+                  <Button onClick={this.onClickHandler} />
                 </Form>
               </CardBody>
             </Collapse>

@@ -5,5 +5,56 @@
   height: 100vh;
 }
 .body {
-  background-color: #ffffff;
+  background: #bdc3c7; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #2c3e50,
+    #bdc3c7
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #2c3e50,
+    #bdc3c7
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+/* Color Themes */
+
+/* 
+Each palette starts with the Base color
+
+:darkBlue {
+  Base Color
+  --a: #2a4d5c;
+
+  Matching Gradient
+  --b: #425d77;
+  --c: #626c8f;
+  --d: #897aa2;
+  --e: #b287ad;
+  --f: #d995b2;
+
+  Generic Gradient
+  --g: #15727c;
+  --h: #17988c;
+  --i: #55bd8a;
+  --j: #a0de7c;
+  --k: #f9f871;
+
+  Spot Palette
+  --l: #5b7e8e;
+  --m: #c6f8ff;
+  --n: #f2962f;
+
+  Twisted Spot Palette
+  --o: #f2962f;
+  --p: #ffeace;
+  --q: #8f7158;
+
+  Classy
+  --r: #98afba;
+  --s: #657a85;
+  --t: #574255;
+  --u: #897285;
+}
+*/
