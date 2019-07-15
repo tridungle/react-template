@@ -13,6 +13,7 @@ import { Row, Col, Button, Input, Form } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
 import * as dotsLoad from "./dotsLoad.json";
+
 const defaultOptions = {
   loop: true,
   autoplay: true,
@@ -31,7 +32,8 @@ export default class Main extends Component {
       collectionTitle: undefined,
       titleEditMode: false,
       loading: undefined,
-      done: undefined
+      done: undefined,
+      imagesArray: undefined
     };
   }
 
@@ -52,11 +54,27 @@ export default class Main extends Component {
       });
   }
 
+  componentDidMount() {
+    fetch("https://agamimstorageapi.azurewebsites.net/container/template")
+      .then(response => response.json())
+      .then(json => {
+        this.setState({ imagesArray: json });
+      });
+  }
+
   handleEditClick() {
     this.setState({ titleEditMode: !this.state.titleEditMode });
   }
 
   render() {
+    if (this.state.imagesArray) {
+      var imagesElements = [];
+      for (var i = 0; i < this.state.imagesArray.length; i++) {
+        imagesElements.push(
+          <img src={this.state.imagesArray[i]} alt="imageme" />
+        );
+      }
+    }
     return (
       <div>
         {this.state.collection ? (
@@ -166,6 +184,7 @@ export default class Main extends Component {
             </div>
           </FadeIn>
         )}
+        {imagesElements}
       </div>
     );
   }
